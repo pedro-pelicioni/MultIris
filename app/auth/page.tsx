@@ -52,52 +52,60 @@ export default function AuthPage() {
 
       // Prepare verification payload
       const verifyPayload: VerifyCommandInput = {
-        action: 'multiris-auth-sepolia', // Your action ID from the Developer Portal
-        signal: '', // Optional additional data
+        action: 'multiris-auth-sepolia', // This is your action ID from the Developer Portal
         verification_level: VerificationLevel.Device, // Orb | Device
       }
 
-      // Execute verification command
-      // Note: Using commands instead of commandsAsync based on library version
-      const { finalPayload } = await MiniKit.commands.verify(verifyPayload)
-      
-      if (finalPayload.status === 'error') {
-        console.error('Error payload', finalPayload)
+      try {
+        // World App will open a drawer prompting the user to confirm the operation
+        // promise is resolved once user confirms or cancels
+        const result = await MiniKit.commands.verify(verifyPayload)
+        const finalPayload = result?.finalPayload
+
+        if (!finalPayload || finalPayload.status === 'error') {
+          console.error('Error payload', finalPayload)
+          setIsAuthenticating(false)
+          return
+        }
+
+        console.log('Verification successful:', finalPayload)
+
+        // Verify the proof in the backend
+        try {
+          const verifyResponse = await fetch('/api/verify', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              payload: finalPayload as ISuccessResult, // Parses only the fields we need to verify
+              action: 'multiris-auth-sepolia',
+            }),
+          })
+
+          const verifyResponseJson = await verifyResponse.json()
+          
+          if (verifyResponseJson.status === 200) {
+            console.log('Verification success!')
+            handleAuthSuccess(finalPayload)
+          } else {
+            console.error('Backend verification failed:', verifyResponseJson)
+            setIsAuthenticating(false)
+          }
+        } catch (error) {
+          console.error('Error verifying proof with backend:', error)
+          
+          // For demo purposes, we'll handle success anyway
+          // In production, you would want to fail here
+          console.log('Proceeding with authentication anyway for demo purposes')
+          handleAuthSuccess(finalPayload)
+        }
+      } catch (error) {
+        console.error('Error during verification process:', error)
         setIsAuthenticating(false)
-        return
       }
-
-      // In production, verify the proof in the backend
-      // For simplicity in this demo, we'll skip the backend verification
-      // and directly process the success
-
-      // For a complete implementation, you would verify the proof with your backend:
-      /*
-      const verifyResponse = await fetch('/api/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          payload: finalPayload as ISuccessResult,
-          action: 'multiris-auth-sepolia',
-          signal: '',
-        }),
-      })
-
-      const verifyResponseJson = await verifyResponse.json()
-      if (verifyResponseJson.status === 200) {
-        console.log('Verification success!')
-        handleAuthSuccess(finalPayload)
-      }
-      */
-
-      // For demo purposes, we'll directly handle success
-      console.log('Verification successful:', finalPayload)
-      handleAuthSuccess(finalPayload)
-      
     } catch (error) {
-      console.error('Error during verification:', error)
+      console.error('Error in verification handler:', error)
       setIsAuthenticating(false)
     }
   }
