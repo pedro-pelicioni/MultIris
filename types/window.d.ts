@@ -1,13 +1,18 @@
+import { VerificationLevel, ISuccessResult } from '@worldcoin/minikit-js';
+
 declare global {
+  interface VerifyCommandInput {
+    action: string;
+    signal?: string;
+    verification_level?: VerificationLevel;
+  }
+
   interface Window {
     MiniKit: {
       isInstalled: () => boolean;
+      install: (appId?: string) => void;
       commands: {
-        verify: (options: {
-          action: string;
-          signal?: string;
-          verification_level: 'orb' | 'device';
-        }) => Promise<{
+        verify: (options: VerifyCommandInput) => Promise<{
           finalPayload: {
             status?: string;
             nullifier_hash?: string;

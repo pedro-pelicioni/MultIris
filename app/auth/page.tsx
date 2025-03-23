@@ -1,22 +1,22 @@
 "use client"
 
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Loader2 } from "lucide-react"
+import { MiniKit, VerifyCommandInput, VerificationLevel, ISuccessResult } from '@worldcoin/minikit-js'
 
-// Interface para os resultados da verificação
+// Interface for verification result
 interface VerificationResult {
-  status?: string;
-  proof?: string;
-  merkle_root?: string;
   nullifier_hash?: string;
+  merkle_root?: string;
+  proof?: string;
   verification_level?: string;
-  version?: number;
+  action_id?: string;
+  signal?: string;
+  status?: string;
   success?: boolean;
-  error?: string;
 }
 
 export default function AuthPage() {
@@ -25,12 +25,18 @@ export default function AuthPage() {
   const router = useRouter()
 
   useEffect(() => {
-    // Verifica se o MiniKit está instalado e disponível
-    if (typeof window !== 'undefined' && window.MiniKit && window.MiniKit.isInstalled()) {
-      setMiniKitInstalled(true)
-      console.log('MiniKit is installed and ready to use')
-    } else {
-      console.log('MiniKit is not installed or running outside World App')
+    // Check if MiniKit is installed and available
+    if (typeof window !== 'undefined') {
+      try {
+        if (MiniKit && MiniKit.isInstalled()) {
+          setMiniKitInstalled(true)
+          console.log('MiniKit is installed and ready to use')
+        } else {
+          console.log('MiniKit is not installed or running outside World App')
+        }
+      } catch (error) {
+        console.error('Error checking MiniKit:', error)
+      }
     }
   }, [])
 
@@ -38,33 +44,58 @@ export default function AuthPage() {
     setIsAuthenticating(true)
     
     try {
-      if (!window.MiniKit || !window.MiniKit.isInstalled()) {
-        console.error('MiniKit is not installed or not available')
+      if (!MiniKit.isInstalled()) {
+        console.error('MiniKit is not installed')
         setIsAuthenticating(false)
         return
       }
 
-      // Prepara o payload de verificação
-      const verifyPayload = {
-        action: 'multiris-auth-sepolia', // ID da ação criada no Developer Portal
-        signal: '', // Opcional
-        verification_level: 'device', // 'orb' | 'device'
+      // Prepare verification payload
+      const verifyPayload: VerifyCommandInput = {
+        action: 'multiris-auth-sepolia', // Your action ID from the Developer Portal
+        signal: '', // Optional additional data
+        verification_level: VerificationLevel.Device, // Orb | Device
       }
 
-      // Executa o comando de verificação
-      const { finalPayload } = await window.MiniKit.commands.verify(verifyPayload)
+      // Execute verification command
+      // Note: Using commands instead of commandsAsync based on library version
+      const { finalPayload } = await MiniKit.commands.verify(verifyPayload)
       
       if (finalPayload.status === 'error') {
-        console.error('Verification error:', finalPayload)
+        console.error('Error payload', finalPayload)
         setIsAuthenticating(false)
         return
       }
 
+      // In production, verify the proof in the backend
+      // For simplicity in this demo, we'll skip the backend verification
+      // and directly process the success
+
+      // For a complete implementation, you would verify the proof with your backend:
+      /*
+      const verifyResponse = await fetch('/api/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          payload: finalPayload as ISuccessResult,
+          action: 'multiris-auth-sepolia',
+          signal: '',
+        }),
+      })
+
+      const verifyResponseJson = await verifyResponse.json()
+      if (verifyResponseJson.status === 200) {
+        console.log('Verification success!')
+        handleAuthSuccess(finalPayload)
+      }
+      */
+
+      // For demo purposes, we'll directly handle success
       console.log('Verification successful:', finalPayload)
-      
-      // Em produção, você deve verificar a prova no backend
-      // Para este exemplo, consideramos a verificação bem-sucedida
       handleAuthSuccess(finalPayload)
+      
     } catch (error) {
       console.error('Error during verification:', error)
       setIsAuthenticating(false)
