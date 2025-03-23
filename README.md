@@ -1,14 +1,14 @@
-# MultIris - Secure Multisig Wallet with World ID Authentication
+# Multiris - Secure Multisig Wallet with World ID Authentication
 
-MultIris is a secure and user-friendly multisignature wallet application that leverages World ID verification to ensure that only real humans can create and manage wallets. The application combines the security benefits of multisignature wallets with the uniqueness guarantees of World ID's biometric verification.
+Multiris is a secure, user-friendly multisignature wallet application that integrates World ID’s iris-based biometric verification to ensure only real humans can create and manage wallets. By combining the robust security of multisignature technology with unique human authentication, Multiris offers a groundbreaking solution for safeguarding digital assets and enabling trusted governance in decentralized systems such as Web3 applications, exchanges, and DAOs.
 
 ## Key Features
 
-- **World ID Authentication**: Verify users are unique humans through iris-based biometric verification
-- **Multisignature Security**: Require multiple approvals for any transaction, preventing single points of failure
-- **Customizable Governance**: Set personalized threshold requirements for transaction approvals
-- **Mobile-First Design**: Optimized for smartphones with an intuitive and accessible interface
-- **Testnet Integration**: Test the application safely with Sepolia testnet before using real assets
+- **World ID Authentication**: Verifies users as unique humans through iris-based biometric verification, preventing Sybil attacks.
+- **Multisignature Security**: Requires multiple approvals for transactions, eliminating single points of failure.
+- **Customizable Governance**: Allows users to define personalized approval thresholds for transactions.
+- **Mobile-First Design**: Optimized for smartphones with an intuitive, accessible interface.
+- **Testnet Integration**: Supports safe testing on the Sepolia testnet before managing real assets.
 
 ## Screenshots
 
@@ -29,89 +29,78 @@ MultIris is a secure and user-friendly multisignature wallet application that le
 
 ## How It Works
 
-MultIris provides a simple yet powerful solution for managing digital assets securely:
+Multiris provides a streamlined, secure approach to digital asset management:
 
-1. **Authentication**: Users verify their identity through World ID, ensuring one person can't create multiple accounts
-2. **Wallet Creation**: Create a multisignature wallet and add trusted co-signers
-3. **Threshold Setting**: Choose how many approvals are needed for each transaction
-4. **Transaction Management**: Initiate, review, and approve transactions with multiple verifications
-5. **Activity Monitoring**: Track all pending and completed transactions in one place
+1. **Authentication**: Users verify their identity with World ID, ensuring one person cannot create multiple accounts.
+2. **Wallet Creation**: Set up a multisignature wallet and add trusted co-signers.
+3. **Threshold Configuration**: Define the number of approvals required for each transaction.
+4. **Transaction Management**: Initiate, review, and approve transactions with multi-party verification.
+5. **Activity Tracking**: Monitor all pending and completed transactions in a unified dashboard.
 
 ## Technology Stack
 
-MultIris is built with modern web technologies:
+Multiris is built with modern, cutting-edge technologies:
 
 - **Frontend**: Next.js, React, TypeScript
 - **UI Components**: Tailwind CSS, Radix UI
-- **Blockchain Interaction**: Viem
+- **Blockchain Integration**: Viem
 - **Authentication**: World ID (via MiniKit integration)
 
 ## Getting Started
 
-To run the application locally:
+To run Multiris locally:
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/multiris.git
 cd multiris
+```
 
 # Install dependencies
 npm install --legacy-peer-deps
 
 # Start the development server
 npm run dev
-```
+World ID Integration
+Multiris leverages World ID for unique human verification, mitigating Sybil attacks where a single entity could manipulate approvals with multiple accounts. Key integration components include:
+MiniKitProvider: Manages connectivity with the World App.
 
-## World ID Integration
+VerifyWithWorld: Handles the verification workflow.
 
-The application uses World ID for unique human verification. This prevents Sybil attacks where one person could create multiple accounts to manipulate transaction approvals. Key components of our World ID integration:
+Authentication data is securely stored and associated with each user’s wallet.
 
-- `MiniKitProvider`: Manages connection with the World App
-- `VerifyWithWorld`: Handles the verification flow
-- Authentication data is stored securely and associated with each user's wallet
+Building for Production
 
-## Building for Production
-
-```bash
 # Build the application
 npm run build
 
 # Start the production server
 npm start
-```
+Deploying to Vercel
+Multiris is optimized for deployment on Vercel:
+Connect your repository to Vercel.
 
-## Deploying to Vercel
+Set required environment variables in the Vercel dashboard.
 
-This project is optimized for deployment on Vercel:
+Deploy the application.
 
-1. Connect your repository to Vercel
-2. Set required environment variables in the Vercel dashboard
-3. Deploy the application
-
-## Project Structure
-
-```
+Project Structure
 multiris/
 ├── app/                   # Next.js app directory
 │   ├── auth/              # Authentication pages
 │   ├── dashboard/         # Main dashboard
-│   ├── create-wallet/     # Wallet creation flow
-│   └── transaction/       # Transaction handling
+│   ├── create-wallet/     # Wallet creation workflow
+│   └── transaction/       # Transaction management
 ├── components/            # Reusable React components
 ├── hooks/                 # Custom React hooks
 ├── lib/                   # Utility functions
 ├── public/                # Static assets
 └── types/                 # TypeScript definitions
-```
 
-## Contributing
+## Problem & Solution
+Problem: Digital security in blockchain remains fragile, with single points of failure and fraud causing significant losses (e.g., Mt. Gox: 850,000 BTC lost; QuadrigaCX: C$250M inaccessible). Existing solutions lack robust identity verification and collaborative governance.
+Solution: Multiris integrates multisignature wallets with World ID, ensuring secure, human-verified transactions and governance, protecting against fraud, unilateral actions, and Sybil attacks.
+## Impact
+Multiris raises the standard for security and trust in decentralized systems by offering a mobile-optimized, human-verified platform for managing digital assets, making it ideal for DAOs, financial platforms, and Web3 communities.
 
-We welcome contributions to MultIris! Please feel free to submit issues or pull requests.
 
-## License
-
-This project is licensed under the MIT License.
-
----
-
-*MultIris: Securing digital assets through human verification and collective decisions.* 
