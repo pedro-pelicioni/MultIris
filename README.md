@@ -13,21 +13,34 @@ Multiris is a secure, user-friendly multisignature wallet application that integ
 ## Screenshots
 
 ### Authentication Screen
-![Authentication Screen with World ID](public/images/Captura de pantalla 2025-03-23 a las 4.08.17.png)
+<div align="center">
+<img src="public/images/Captura de pantalla 2025-03-23 a las 4.08.17.png" alt="Teams" width="600"/>
+</div>
+
 
 ### Wallet Creation
-![Creating a new multisig wallet](screenshot-placeholder-2.png)
+<div align="center">
+<img src="public/images/Captura de pantalla 2025-03-23 a las 4.16.08.png" alt="Teams" width="600"/>
+</div>
+
 
 ### Dashboard
-![Wallet dashboard overview](screenshot-placeholder-3.png)
+<div align="center">
+<img src="public/images/Captura de pantalla 2025-03-23 a las 4.13.53.png" alt="Teams" width="600"/>
+</div>
+
 
 ### Transaction Details
-![Transaction approval interface](screenshot-placeholder-4.png)
-
-### Members Management
-![Adding and managing wallet members](screenshot-placeholder-5.png)
+<div align="center">
+<img src="public/images/Captura de pantalla 2025-03-23 a las 4.18.23.png" alt="Teams" width="600"/>
+</div>
 
 ## How It Works
+
+<div align="center">
+<img src="public/images/O Problema Segurança digital ainda é frágil demais. Decisões unilaterais, golpes internos e roubos digitais ainda comprometem a confiança em sistemas financeiros e organizações descentralizadas. (4).gif" alt="Teams" width="600"/>
+</div>
+
 
 Multiris provides a streamlined, secure approach to digital asset management:
 
