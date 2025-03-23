@@ -13,7 +13,7 @@ Multiris is a secure, user-friendly multisignature wallet application that integ
 ## Screenshots
 
 ### Authentication Screen
-![Authentication Screen with World ID](screenshot-placeholder-1.png)
+![Authentication Screen with World ID](public/images/Captura de pantalla 2025-03-23 a las 4.08.17.png)
 
 ### Wallet Creation
 ![Creating a new multisig wallet](screenshot-placeholder-2.png)
